@@ -1,7 +1,7 @@
 let movies = [
     {
       id: 0,
-      title: "The Godfather",
+      title: "The Godfather.",
       director: "Francis Ford Coppola",
       metascore: 100,
       genre: "Drama",
