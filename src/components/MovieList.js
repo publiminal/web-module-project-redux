@@ -1,10 +1,11 @@
 import React from 'react';
-
+import { connect } from 'react-redux'
 import MovieListItem from './MovieListItem';
 import MovieFooter from './MovieFooter';
 
 const MovieList = (props)=> {
-    const movies = [];
+    // const movies = []; //before connect the value was this empty array [];
+    const { movies } = props; // get movies from injected properties with connect by redux
 
     return (
         <div className="col">
@@ -31,4 +32,13 @@ const MovieList = (props)=> {
     );
 }
 
-export default MovieList;
+
+const mapStateToProps = (state) => {
+    return{
+        movies:state.movies
+    }
+}
+
+
+// export default MovieList; // before adding connect by redux
+export default connect(mapStateToProps)(MovieList)

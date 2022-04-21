@@ -1,12 +1,22 @@
 import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import {deleteMovie} from '../actions/movieActions'
 
 const Movie = (props) => {
     const { id } = useParams();
     const { push } = useHistory();
 
-    const movies = [];
+    // const movies = []; //before connect the value was this empty array [];
+    const {movies} = props
     const movie = movies.find(movie=>movie.id===Number(id));
+
+    /* handle delete action  */
+    const doDeleteMovie = (id) => {
+        console.log('doDeleteMovie', id)
+        props.deleteMovie(id) // update state
+        push('/movies') // redirect to movies url
+    }
     
     return(<div className="modal-page col">
         <div className="modal-dialog">
@@ -38,7 +48,7 @@ const Movie = (props) => {
                         
                         <section>
                             <span className="m-2 btn btn-dark">Favorite</span>
-                            <span className="delete"><input type="button" className="m-2 btn btn-danger" value="Delete"/></span>
+                            <span className="delete"><input type="button" onClick={() => doDeleteMovie(id)} className="m-2 btn btn-danger" value="Delete"/></span>
                         </section>
                     </div>
                 </div>
@@ -47,4 +57,15 @@ const Movie = (props) => {
     </div>);
 }
 
-export default Movie;
+const mapStateToProps = (state) => {
+    return{
+        movies:state.movies
+    }
+}
+
+const mapDispatchToProps = {
+   deleteMovie
+}
+
+// export default Movie; before adding connect by redux
+export default connect(mapStateToProps, mapDispatchToProps)(Movie)
